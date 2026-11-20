@@ -1299,6 +1299,28 @@ section.band.alt {
 .contact-card:hover .contact-value { color: var(--accent); }
 .contact-card .ext { color: var(--text-muted); width: 16px; height: 16px; }
 
+.contact-form {
+  display: grid;
+  gap: 1.1rem;
+  width: min(100%, 760px);
+  padding: clamp(1rem, 3vw, 2rem);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.contact-form-grid { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) {
+  .contact-form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contact-form-grid .field-full { grid-column: 1 / -1; }
+}
+.contact-form textarea.input { min-height: 170px; resize: vertical; line-height: 1.55; }
+.contact-form-status { min-height: 1.5em; color: var(--text-muted); font-size: 0.88rem; }
+.contact-form-status[data-state="error"] { color: #ffb088; }
+.contact-form-note { color: var(--text-muted); font-size: 0.82rem; }
+.contact-form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; }
+.contact-form-actions .btn { flex: 0 0 auto; }
+
 .about-layout { display: grid; gap: clamp(1.5rem, 4vw, 3rem); }
 @media (min-width: 940px) { .about-layout { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: start; } }
 
@@ -2736,56 +2758,28 @@ section.band.alt {
 
   /* ---------- 6.5 Contact ---------- */
   function viewContact() {
-    var s = DATA.settings;
-    var cards = [];
-
-    if (s.contactEmail) {
-      var email = s.contactEmail;
-      var mailOk = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email);
-      cards.push(
-        '<a class="contact-card reveal" data-reveal href="' + (mailOk ? "mailto:" + attr(email) : "#/contact") + '">' +
-          '<span class="contact-icon" aria-hidden="true">' + ICONS.mail + "</span>" +
-          '<span class="contact-body">' +
-            '<span class="contact-label">Email</span>' +
-            '<span class="contact-value">' + esc(email) + "</span>" +
-          "</span>" +
-          '<span class="ext" aria-hidden="true">' + ICONS.arrowRight + "</span>" +
-        "</a>"
-      );
-    }
-
-    SOCIAL_META.forEach(function (sm) {
-      var url = s.social[sm.key];
-      if (!url) return;
-      cards.push(
-        '<a class="contact-card reveal" data-reveal href="' + attr(url) + '">' +
-          '<span class="contact-icon" aria-hidden="true">' + ICONS[sm.icon] + "</span>" +
-          '<span class="contact-body">' +
-            '<span class="contact-label">' + esc(sm.label) + "</span>" +
-            '<span class="contact-value">' + esc(friendlyUrl(url)) + "</span>" +
-          "</span>" +
-          '<span class="ext" aria-hidden="true">' + ICONS.external + "</span>" +
-        "</a>"
-      );
-    });
-
     return '<section class="band" aria-labelledby="contact-title">' +
       '<div class="container">' +
         '<div class="section-head">' +
           "<div>" +
             '<p class="eyebrow">Say hello</p>' +
-            '<h1 class="section-title" id="contact-title">Contact</h1>' +
-            '<p class="section-sub">Questions, bug reports or feature requests — pick whichever channel suits you. There is no form here; every card opens your mail app or the network directly.</p>' +
+            '<h1 class="section-title" id="contact-title">Contact us</h1>' +
+            '<p class="section-sub">Have a question, bug report or idea? Write us a message below. You can stay on this page while you send it.</p>' +
           "</div>" +
         "</div>" +
-        (cards.length
-          ? '<div class="grid grid-contact">' + cards.join("") + "</div>"
-          : stateBlock({
-              icon: "mail",
-              title: "No contact details yet",
-              text: "Contact information has not been added to the site data file.",
-              action: '<a class="btn btn-secondary" href="#/apps">Browse apps instead</a>'
-            })) +
+        '<form class="contact-form reveal" data-reveal id="contactForm">' +
+          '<div class="contact-form-grid">' +
+            '<div class="field"><label for="contactName">Your name</label><input class="input" id="contactName" name="name" type="text" autocomplete="name" maxlength="100" required /></div>' +
+            '<div class="field"><label for="contactEmail">Email address</label><input class="input" id="contactEmail" name="email" type="email" autocomplete="email" maxlength="254" required /></div>' +
+            '<div class="field field-full"><label for="contactSubject">Subject</label><input class="input" id="contactSubject" name="subject" type="text" maxlength="160" required /></div>' +
+            '<div class="field field-full"><label for="contactMessage">Message</label><textarea class="input" id="contactMessage" name="message" maxlength="5000" required></textarea></div>' +
+          '</div>' +
+          '<p class="contact-form-note">Email delivery is not connected yet. Your message will not be sent until we configure the secure mail service.</p>' +
+          '<div class="contact-form-actions">' +
+            '<button class="btn btn-primary" type="submit">' + ICONS.mail + 'Send message</button>' +
+            '<p class="contact-form-status" id="contactFormStatus" role="status" aria-live="polite"></p>' +
+          '</div>' +
+        '</form>' +
         '<div style="margin-top:clamp(1.5rem,4vw,2.5rem)">' +
           '<div class="cta-band reveal" data-reveal>' +
             "<div>" +
@@ -2974,6 +2968,8 @@ section.band.alt {
     } else if (route.name === "app") {
       var currentApp = appBySlug(route.param);
       if (currentApp) wireDetailPage(currentApp);
+    } else if (route.name === "contact") {
+      wireContactPage();
     }
 
     observeReveals(view);
@@ -2986,7 +2982,20 @@ section.band.alt {
      8. PAGE INTERACTIONS
      ======================================================================== */
 
-  /* ---------- 8.1 Catalogue wiring ---------- */
+  /* ---------- 8.1 Contact form wiring ---------- */
+  function wireContactPage() {
+    var form = document.getElementById("contactForm");
+    var status = document.getElementById("contactFormStatus");
+    if (!form || !status) return;
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      status.textContent = "Your message has not been sent: email delivery is not configured yet. Please try again later.";
+      status.setAttribute("data-state", "error");
+    });
+  }
+
+  /* ---------- 8.2 Catalogue wiring ---------- */
   function wireAppsPage(query) {
     var search = document.getElementById("appSearch");
     var clearBtn = document.getElementById("searchClear");
