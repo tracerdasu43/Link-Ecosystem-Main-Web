@@ -1,0 +1,12 @@
+{
+  "version": 0,
+  "permissions": {
+    "allow_always": [
+      "cd /tmp*",
+      "pwd; echo*"
+    ],
+    "deny_always": []
+  },
+  "extra_rule_files": [],
+  "disabled_tools": []
+}

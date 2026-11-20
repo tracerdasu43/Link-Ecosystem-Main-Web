@@ -1,0 +1,98 @@
+{
+  "settings": {
+    "siteName": "Link Ecosystem",
+    "tagline": "Fast, free apps built for real life.",
+    "heroTitle": "Apps built to move with you",
+    "heroSubtitle": "A connected ecosystem of lightweight, free apps and tools for Android, desktop and the web. Small downloads, instant launches, no accounts.",
+    "aboutText": "Link Ecosystem Developers is an independent studio building lightweight software for everyday life. We started with a simple frustration: most apps are heavy, noisy and full of things nobody asked for.\n\nSo we build the opposite. Small installs. Fast launches. No account walls, no ad networks and no analytics SDKs buried in the package. Every app shares the same design language, so learning one means you already understand the rest.\n\nWe design for real conditions - entry-level phones, metered data and unreliable connections - because that is how most of the world actually uses software. If an app cannot open in under a second, it does not ship.\n\nEverything we publish is free to download. The apps live on our external server; this site is the catalogue, the release notes archive and the front door to the ecosystem.",
+    "contactEmail": "hello@linkecosystem.com",
+    "footerText": "© 2026 Link Ecosystem Developers. All rights reserved.",
+    "metaDescription": "Link Ecosystem Developers build fast, free and lightweight apps and tools for Android, Windows, macOS, Linux, iOS and the web.",
+    "social": {
+      "github": "https://github.com/linkecosystem",
+      "telegram": "https://t.me/linkecosystem",
+      "whatsapp": "https://wa.me/254700000000",
+      "x": "https://x.com/linkecosystem",
+      "youtube": "https://youtube.com/@linkecosystem",
+      "website": "https://example.com/link-ecosystem"
+    }
+  },
+  "categories": ["Streaming", "Tools", "Finance", "Health", "Developer"],
+  "apps": [
+    {
+      "id": "demo-link-stream",
+      "name": "Link Stream",
+      "slug": "link-stream",
+      "tagline": "A featherweight media player that opens instantly.",
+      "description": "Link Stream plays almost any video or audio format without extra codec packs. It is built for low-end hardware first, so it launches in under a second even on older devices.\n\nThe library stays on your phone and is never uploaded anywhere. Subtitles, playback speed, gesture controls and picture-in-picture are all included, with no account and no ads.\n\nThis is a demo entry shipped with the site so you can preview the layout. Replace it with a real release by editing data/apps.json.",
+      "icon": "https://placehold.co/256x256/141414/ff6600.png?text=LS",
+      "banner": "https://placehold.co/1260x540/0d0d0d/ff6600.png?text=Link+Stream",
+      "screenshots": [
+        "https://placehold.co/540x960/101010/ff6600.png?text=Library",
+        "https://placehold.co/540x960/101010/ff6600.png?text=Player",
+        "https://placehold.co/540x960/101010/ff6600.png?text=Subtitles"
+      ],
+      "category": "Streaming",
+      "platform": "Android",
+      "version": "2.4.0",
+      "size": "18 MB",
+      "requirements": "Android 8.0+",
+      "changelog": "Added per-video subtitle offset controls\nImproved battery usage during long playback\nFixed stutter on devices with 2 GB RAM\nNew gesture: swipe vertically for brightness\nUpdated translations for Swahili and French",
+      "status": "published",
+      "featured": true,
+      "order": 1,
+      "updated": "2026-11-14",
+      "links": [
+        { "label": "Download APK (direct)", "url": "https://example.com/downloads/link-stream-2.4.0.apk" }
+      ]
+    },
+    {
+      "id": "demo-link-toolkit",
+      "name": "Link Toolkit",
+      "slug": "link-toolkit",
+      "tagline": "Sixty small utilities in one clean install.",
+      "description": "Link Toolkit bundles the utilities you reach for every week: unit and currency converters, a text case changer, a QR scanner, a colour picker, a stopwatch and more.\n\nEvery tool runs entirely on-device, so it keeps working with no connection. This demo entry has two download links, showing how the catalogue sends visitors to the details page when a release is available for more than one platform.",
+      "icon": "https://placehold.co/256x256/141414/ff6600.png?text=LT",
+      "banner": "https://placehold.co/1260x540/0d0d0d/ff6600.png?text=Link+Toolkit",
+      "screenshots": [
+        "https://placehold.co/540x960/101010/ff6600.png?text=Converters",
+        "https://placehold.co/540x960/101010/ff6600.png?text=Text+tools"
+      ],
+      "category": "Tools",
+      "platform": "Cross-platform",
+      "version": "1.9.2",
+      "size": "31 MB",
+      "requirements": "Android 10+ / Windows 10+",
+      "changelog": "New unit converter categories\nDark mode polish and larger tap targets\nFixed rounding bug in the currency converter\nAdded keyboard shortcuts on desktop",
+      "status": "published",
+      "featured": true,
+      "order": 2,
+      "updated": "2026-10-02",
+      "links": [
+        { "label": "Download for Android", "url": "https://example.com/downloads/link-toolkit-1.9.2.apk" },
+        { "label": "Download for Windows", "url": "https://example.com/downloads/link-toolkit-1.9.2.exe" }
+      ]
+    },
+    {
+      "id": "demo-link-vault",
+      "name": "Link Vault",
+      "slug": "link-vault",
+      "tagline": "Offline-first budgeting that never leaves your device.",
+      "description": "Link Vault keeps budgets, recurring bills and savings goals in a local encrypted database. No sign-up, no cloud sync, no bank connections - just a clear picture of your money.\n\nThis demo entry is marked coming_soon, so the site shows a disabled download button and a release badge until you publish real links.",
+      "icon": "",
+      "banner": "",
+      "screenshots": [],
+      "category": "Finance",
+      "platform": "Windows",
+      "version": "0.1.0",
+      "size": "12 MB",
+      "requirements": "Windows 10+",
+      "changelog": "First public preview build\nLocal encrypted storage\nMonthly budget envelopes",
+      "status": "coming_soon",
+      "featured": false,
+      "order": 3,
+      "updated": "2026-09-18",
+      "links": []
+    }
+  ]
+}
